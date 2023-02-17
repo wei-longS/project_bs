@@ -27,6 +27,11 @@ namespace WebAPI.Config
                         //连接字符串
                        // ConnectionString = "server=WEILONG\\WL;database=bs;Integrated Security=true;",
                           ConnectionString = "server=CZMT-DZ-0232;database=bs;Integrated Security=true;",
+                          //测试
+
+
+
+
                         DbType = DbType.SqlServer,
                         IsAutoCloseConnection = true
                     });
