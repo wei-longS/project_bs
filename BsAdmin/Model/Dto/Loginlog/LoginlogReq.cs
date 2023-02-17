@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Dto.Emaillog
+namespace Model.Dto.Loginlog
 {
-    public class EmaillogReq
+    public class LoginlogReq
     {
-        public string Emaillogaddr { get; set; }
-        public string Emaillogname { get; set; }
-        public string Emaillogtitle { get; set; }
-        public string Emaillogcontent { get; set; }
+        public string Loginlogname { get; set; }
+        public string Loginlogcontent { get; set; }
         public DateTime CreateDate { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }

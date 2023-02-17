@@ -34,6 +34,7 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
         }
     })
 }
+
 const resetForm = (ruleFormRef: FormInstance | undefined) => {
     if (!ruleFormRef) return
     ruleFormRef.resetFields()

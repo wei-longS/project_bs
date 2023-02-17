@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ansely.Email;
+using AutoMapper;
 using Interface;
 using Model.Dto.Client;
 using Model.Dto.Emaillog;
@@ -28,6 +29,29 @@ namespace Service
             info.CreateUserId = userId;
             info.CreateDate = DateTime.Now;
             info.IsDeleted = 0;
+            //发送邮件
+            var emaillogaddr = req.Emaillogaddr;  //邮箱地址
+            var emaillogname = req.Emaillogname; //邮件昵称
+            var emaillogtitle = req.Emaillogtitle;   //邮箱标题
+            var emaillogcontent = req.Emaillogcontent; //邮件内容
+            var options = new EmailSenderOptions()
+            {
+                FromAddr = "1835868573@qq.com",     //     邮件发送者的邮箱地址。
+                Secret = "kfzajpilduqocfcg",//授权码
+                Host = "smtp.qq.com"
+            };
+            IEmailSender emailSender = new EmailSender(options);
+            var addrs = new List<string>
+            {
+                emaillogaddr, 
+            };
+            //   var tmp = new EmailTemplate("wl", "标题", "测试1");
+            var tmp = new EmailTemplate(emaillogname, emaillogtitle, emaillogcontent);
+
+                emailSender.Send(tmp, addrs); //发送
+
+            
+
             return _db.Insertable(info).ExecuteCommand() > 0;
         }
         public bool Del(long id)
@@ -65,7 +89,7 @@ namespace Service
                 .ToList();
             pageInfo.Data = _mapper.Map<List<EmaillogRes>>(res);
             pageInfo.Total = exp.Count();
-            return pageInfo;
+            return  pageInfo;
         }
     }
 }

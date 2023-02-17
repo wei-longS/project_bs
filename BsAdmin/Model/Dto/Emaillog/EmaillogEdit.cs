@@ -13,5 +13,6 @@ namespace Model.Dto.Emaillog
         public string Emaillogname { get; set; }
         public string Emaillogtitle { get; set; }
         public string Emaillogcontent { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

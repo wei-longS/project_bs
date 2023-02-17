@@ -4,4 +4,5 @@ export class EmaillogModel {
     emaillogname: string = "";
     emaillogtitle: string = "";
     emaillogcontent: string = "";
+    createtime:string ="";
 }

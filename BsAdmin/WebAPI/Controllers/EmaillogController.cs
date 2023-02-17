@@ -32,45 +32,47 @@ namespace WebAPI.Controllers
             return ResultHelper.Success(_emaillog.GetEmaillogById(id));
         }
         [HttpPost]
-        public ApiResult Add(EmaillogAdd req)
+        public  ApiResult  Add(EmaillogAdd req)
         {
             //获取当前登录人信息
             long userId = Convert.ToInt32(HttpContext.User.Claims.ToList()[0].Value);
-            var emaillogaddr = req.Emaillogaddr;  //邮箱地址
-            var emaillogname = req.Emaillogname; //邮件昵称
-            var emaillogtitle = req.Emaillogtitle;   //邮箱标题
-            var emaillogcontent = req.Emaillogcontent; //邮件内容
-            var options = new EmailSenderOptions()
-            {
-                FromAddr = "1835868573@qq.com",     //     邮件发送者的邮箱地址。
-                Secret = "kfzajpilduqocfcg",//授权码
-                Host = "smtp.qq.com"
-            };
+            //var emaillogaddr = req.Emaillogaddr;  //邮箱地址
+            //var emaillogname = req.Emaillogname; //邮件昵称
+            //var emaillogtitle = req.Emaillogtitle;   //邮箱标题
+            //var emaillogcontent = req.Emaillogcontent; //邮件内容
+            //var options = new EmailSenderOptions()
+            //{
+            //    FromAddr = "1835868573@qq.com",     //     邮件发送者的邮箱地址。
+            //    Secret = "kfzajpilduqocfcg",//授权码
+            //    Host = "smtp.qq.com"
+            //};
 
-            IEmailSender emailSender = new EmailSender(options);
-            var addrs = new List<string>
-            {
-              //  "1835868573@qq.com",
-                emaillogaddr,
-              // "2528838602@qq.com",
-               //"2050427292@qq.com",  
-            };
+            //IEmailSender emailSender = new EmailSender(options);
+            //var addrs = new List<string>
+            //{
+            //  //  "1835868573@qq.com",
+            //    emaillogaddr,
+            //  // "2528838602@qq.com",
+            //   //"2050427292@qq.com",  
+            //};
+            
+            //var tmp = new EmailTemplate(emaillogname, emaillogtitle, emaillogcontent);
+
+            //emailSender.Send(tmp, addrs);
+
+
             //   var tmp = new EmailTemplate("wl", "标题", "测试1");
-            var tmp = new EmailTemplate(emaillogname, emaillogtitle, emaillogcontent);
-
-            var res = emailSender.Send(tmp, addrs);
-
-            if (!res.Successed)
-            {
-                Console.WriteLine("发送成功");
-            }
-            else
-            {
-                foreach (var err in res.Errors)
-                {
-                    Console.WriteLine(err.Description);
-                }
-            }
+            //if (!res.Successed)
+            //{
+            //    Console.WriteLine("发送成功");
+            //}
+            //else
+            //{
+            //    foreach (var err in res.Errors)
+            //    {
+            //        Console.WriteLine(err.Description);
+            //    }
+            //}
 
             return ResultHelper.Success(_emaillog.Add(req, userId));
         }

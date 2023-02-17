@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { editNickNameOrPassword } from '../../http';
+import { editNickNameOrPassword ,addLoginlog ,getUserData} from '../../http';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import Tool from '../../global'
 import { useRouter } from 'vue-router';
@@ -39,6 +39,29 @@ const form = reactive({
     name: useStore().state.NickName,
     password: '',
 })
+//登录日志
+const form1 = reactive({
+    loginlogname: "",
+    loginlogcontent: "",
+    createtime: "",
+    pageIndex: 1,
+    pageSize: 10,
+    Total: 0
+})
+
+const sender = async () => {
+    var parms = {
+
+        Loginlogname: form1.loginlogname,
+        Loginlogcontent: form1.loginlogcontent +'退出登录',
+        Createtime: form1.createtime,
+    }
+    console.log(parms)
+
+    // 执行添加逻辑 
+   await addLoginlog(parms) as any as boolean
+        form1.loginlogname = ''
+}
 
 const onSubmit = async () => {
     ElMessageBox.confirm(
@@ -54,9 +77,11 @@ const onSubmit = async () => {
             let res: Boolean = editNickNameOrPassword(form.name, form.password) as any as boolean
             if (res) {
                 ElMessage.success("设置成功！即将退出，请重新登录...")
+                sender()
                 setTimeout(function () {
                     new Tool().ClearLocalStorage()
                     router.push({ path: "/login" })
+                    
                 }, 2000)
             } else {
                 ElMessage.success("设置失败！请联系系统管理员")

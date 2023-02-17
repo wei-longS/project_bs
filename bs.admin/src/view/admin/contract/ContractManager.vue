@@ -31,9 +31,7 @@ const form = reactive({
     Total: 0
 })
 //合同内容详情
-
 const open4 = (index: number, row: ContractModel) => {
-
     ElNotification({
 
         title: '编号： ' + row.contractid,
@@ -41,8 +39,6 @@ const open4 = (index: number, row: ContractModel) => {
         position: 'top-right',
     })
 }
-
-
 
 const rules = reactive<FormRules>({
     contractname: [{ required: false, message: '请输入合同名', trigger: 'blur' }]
@@ -197,9 +193,6 @@ const handleCurrentChange = (val: number) => {
 }
 const loading = ref(true)
 
-
-
-
 //导出全部Excel
 const exportClick = () => {
     ElMessageBox.confirm(
@@ -222,13 +215,14 @@ const exportClick = () => {
                 FileSaver.saveAs(new Blob([wbout], {
                     type: 'application/octet-stream'
                 }), '合同信息表.xlsx')//自定义文件名
-                ElMessage({
-                    message: '导出成功！',
-                    type: 'success',
-                })
+
             } catch (e) {
                 if (typeof console !== 'undefined') console.log(e, wbout);
             }
+            ElMessage({
+                message: '导出成功！',
+                type: 'success',
+            })
             return wbout
         })
         .catch(() => {
@@ -325,8 +319,7 @@ const exportClick = () => {
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="prev, pager, next" :total="form.Total"
-            @current-change="handleCurrentChange" />
+        <el-pagination background layout="prev, pager, next" :total="form.Total" @current-change="handleCurrentChange" />
     </el-card>
 
     <addVue :addVisible="addVisible" :info="info" @CloseAdd="CloseAdd"></addVue>

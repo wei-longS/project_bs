@@ -9,6 +9,31 @@ export const getToken = (name: string, password: string) => {
 }
 
 
+
+//登录日志模块
+//获取列表
+export const getLoginlogDataNew = async (parms: {}) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.post(http + "/Loginlog/GetLoginlogs", parms)
+}
+//添加
+export const addLoginlog = async (parms: {}) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.post(http + "/Loginlog/Add", parms)
+}
+//删除
+export const delLoginlog = async (id: number) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(http + "/Loginlog/Del?id=" + id)
+}
+//BatchDel
+export const batchDelLoginlog = async (ids: string) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(http + "/Loginlog/BatchDel?ids=" + ids)
+}
+
+
+
 //邮件信息模块
 //获取列表
 export const getEmaillogDataNew = async (parms: {}) => {
@@ -19,11 +44,6 @@ export const getEmaillogDataNew = async (parms: {}) => {
 export const addEmaillog = async (parms: {}) => {
     instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
     return instance.post(http + "/Emaillog/Add", parms)
-}
-//修改
-export const editEmaillog = async (parms: {}) => {
-    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
-    return instance.post(http + "/Emaillog/Edit", parms)
 }
 //删除
 export const delEmaillog = async (id: number) => {

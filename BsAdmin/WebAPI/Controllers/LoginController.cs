@@ -10,7 +10,7 @@ namespace WebAPI.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class LoginController : ControllerBase
-    { 
+    {
         private IUserService _userService;
         private ICustomJWTService _jwtService;
         public LoginController(IUserService userService, ICustomJWTService jwtService)

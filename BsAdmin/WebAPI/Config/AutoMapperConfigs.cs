@@ -4,6 +4,7 @@ using Model.Dto.Contract;
 using Model.Dto.Department;
 using Model.Dto.Emaillog;
 using Model.Dto.Employee;
+using Model.Dto.Loginlog;
 using Model.Dto.Menu;
 using Model.Dto.Position;
 using Model.Dto.Role;
@@ -55,6 +56,10 @@ namespace WebAPI.Config
             CreateMap<Emaillog, EmaillogRes>();
             CreateMap<EmaillogAdd, Emaillog>();
             CreateMap<EmaillogEdit, Emaillog>();
+            //登录日志
+            CreateMap<Loginlog, LoginlogRes>();
+            CreateMap<LoginlogAdd, Loginlog>();
+            CreateMap<LoginlogEdit, Loginlog>();
         }
     }
 }

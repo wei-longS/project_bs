@@ -16,6 +16,7 @@ const form = reactive({
     emaillogname: "",
     emaillogtitle: "",
     emaillogcontent: "",
+    createtime: "",
     pageIndex: 1,
     pageSize: 10,
     Total: 0
@@ -46,19 +47,13 @@ const resetForm = (ruleFormRef: FormInstance | undefined) => {
 }
 
 const addVisible = ref(false)
-const add = () => {
-    addVisible.value = true
-}
+
 const CloseAdd = () => {
     addVisible.value = false
     info.value = undefined
     LoadTableData()
 }
 const info = ref()
-const handleEdit = (index: number, row: EmaillogModel) => {
-    info.value = JSON.stringify(row)
-    addVisible.value = true
-}
 
 //单个删除
 const handleDelete = async (index: number, row: EmaillogModel) => {
@@ -127,9 +122,7 @@ const Del = async () => {
     }
 }
 const queryDialog = ref(false)
-const queryDialogClose = () => {
-    queryDialog.value = false;
-}
+
 //表格
 const tableData = ref<Array<EmaillogModel>>()
 onMounted(async () => {
@@ -138,20 +131,20 @@ onMounted(async () => {
 })
 const LoadTableData = async (name: string = "") => {
     let parms = {
-
         Emaillogaddr: form.emaillogaddr,
         Emaillogname: form.emaillogname,
         Emaillogtitle: form.emaillogtitle,
         Emaillogcontent: form.emaillogcontent,
+        Createtime: form.createtime,
         PageIndex: form.pageIndex,
         PageSize: form.pageSize
 
     }
+    console.log("qqqq")
     let res = await getEmaillogDataNew(parms) as any
-    // console.log("后端数据信息")
-    //console.log(res)
+    console.log("后端数据信息")
+    console.log(res)
     form.Total = res.total
-
     tableData.value = res.data as EmaillogModel[]
     loading.value = false
 }
@@ -189,8 +182,7 @@ const loading = ref(true)
                     </el-form-item>
                 </el-form>
                 <p>
-                    <el-button type="primary" @click="add">新增</el-button>
-                    <el-button type="danger" @click="Del">删除</el-button>
+                    <el-button type="danger" @click="Del">批量删除</el-button>
                 </p>
             </div>
         </template>
@@ -217,6 +209,11 @@ const loading = ref(true)
                     <div>{{ scope.row.emaillogcontent }}</div>
                 </template>
             </el-table-column>
+            <el-table-column label="发送日期">
+                <template #default="scope">
+                    <div>{{ scope.row.createDate }}</div>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" align="right" width="200">
                 <template #default="scope">
                     <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -226,7 +223,7 @@ const loading = ref(true)
         <el-pagination background layout="prev, pager, next" :total="form.Total" @current-change="handleCurrentChange" />
     </el-card>
 
-<addVue :addVisible="addVisible" :info="info" @CloseAdd="CloseAdd"></addVue>
+    <addVue :addVisible="addVisible" :info="info" @CloseAdd="CloseAdd"></addVue>
 </template>
 <style lang="scss" scoped>
 .el-pagination {

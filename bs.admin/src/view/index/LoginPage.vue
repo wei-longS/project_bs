@@ -53,7 +53,7 @@
 import { ref, reactive ,onMounted ,onUnmounted} from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { getToken } from '../../http/index'
+import { getToken ,addLoginlog } from '../../http/index'
 import Tool from '../../global'
 import { UserInfo } from './class/UserInfo'
 import { useStore } from 'vuex';
@@ -95,9 +95,34 @@ const rules = reactive<FormRules>({
     passWord: [{ required: true, message: "请输入密码", trigger: 'blur' }]
 })
 const ruleFormRef = ref<FormInstance>()
+
+//登录日志
+const form1 = reactive({
+    loginlogname: "",
+    loginlogcontent: "",
+    createtime: "",
+    pageIndex: 1,
+    pageSize: 10,
+    Total: 0
+})
+
+const sender = async () => {
+    var parms = {
+
+        Loginlogname: form.userName,
+        Loginlogcontent: form.userName+'登录成功',
+        Createtime: form1.createtime,
+    }
+    console.log(parms)
+
+    // 执行添加逻辑 
+    await addLoginlog(parms) as any as boolean
+        form1.loginlogname = ''
+}
+
 const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
-    console.log("执行了。。。。")
-    
+    //console.log("执行了。。。。")
+
     if (!ruleFormRef) return;
     await ruleFormRef.validate(async (valid, fields) => {
         if (valid) {
@@ -109,6 +134,7 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
             store.commit("SettingNickName",user.NickName)
             store.commit("SettingToken",token)
             router.push({ path: '/desktop' });
+            sender()
             ElMessage({
             message: user.NickName+'登录成功！',
             type: 'success',
